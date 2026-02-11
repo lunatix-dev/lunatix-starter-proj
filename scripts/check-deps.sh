@@ -119,12 +119,19 @@ check_system_deps() {
 }
 
 install_system_pkgs() {
-    if [ ${#MISSING_SYSTEM_PKGS[@]} -eq 0 ] || [ "$PKG_MGR" == "unknown" ]; then
+    if [ ${#MISSING_SYSTEM_PKGS[@]} -eq 0 ]; then
         return 0
     fi
 
     local to_install=()
+    local install_tauri_cargo=false
+
     for pkg in "${MISSING_SYSTEM_PKGS[@]}"; do
+        if [ "$pkg" == "cargo-tauri" ]; then
+            install_tauri_cargo=true
+            continue
+        fi
+
         case $PKG_MGR in
             pacman) to_install+=("${ARCH_PKGS[$pkg]}") ;;
             apt)    to_install+=("${APT_PKGS[$pkg]}") ;;
@@ -132,31 +139,33 @@ install_system_pkgs() {
         esac
     done
 
-    # Unique and filter empty
+    # Filter unique system packages
     to_install=($(echo "${to_install[@]}" | tr ' ' '\n' | sort -u | grep -v '^$'))
 
-    if [ ${#to_install[@]} -gt 0 ]; then
+    # Handle System Packages
+    if [ ${#to_install[@]} -gt 0 ] && [ "$PKG_MGR" != "unknown" ]; then
         log_warn "Missing system packages: ${to_install[*]}"
         read -p "Install them now? [y/N] " -n 1 -r
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             $INSTALL_CMD "${to_install[@]}" || return 1
-            return 2 # Signal success/re-run
+            # Do not return yet, check for tauri next
         fi
     fi
-    return 1
-}
 
-install_frontend_deps() {
-    if [ ${#MISSING_FRONTEND_DEPS[@]} -eq 0 ]; then return 0; fi
-
-    log_warn "Missing frontend dependencies. Run 'bun install'?"
-    read -p "[y/N] " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        bun install || return 1
-        return 2 # Signal success/re-run
+    # Handle Tauri CLI via Cargo
+    if [ "$install_tauri_cargo" = true ]; then
+        log_warn "Tauri CLI is missing."
+        read -p "Install tauri-cli via cargo? [y/N] " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            cargo install tauri-cli || return 1
+            return 2 
+        fi
     fi
+
+    [ ${#to_install[@]} -gt 0 ] && return 2
+    
     return 1
 }
 
