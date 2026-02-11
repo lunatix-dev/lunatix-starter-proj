@@ -39,3 +39,26 @@
 
 # debug information files
 *.dwo
+
+
+node_modules/
+bun.lockb
+target/
+dist/
+build/
+builddir/
+.svelte-kit/
+cpp-server/builddir/
+cpp-server/subprojects/crow/
+cpp-server/subprojects/asio/
+cpp-server/subprojects/packagecache/
+apps/desktop-app/src-tauri/target/
+apps/desktop-app/src-tauri/binaries/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+*.log
+*.env.local
+

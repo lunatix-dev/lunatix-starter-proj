@@ -1,0 +1,6 @@
+CompileFlags:
+  Add: 
+    - "-Ithird_party"
+    - "-std=c++23"
+    - "-Wall"
+  CompilationDatabase: "build"

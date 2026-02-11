@@ -1,0 +1,61 @@
+{
+    "build": {
+        "beforeBuildCommand": "bun run --filter shared-ui build",
+        "beforeDevCommand": "bun run --filter shared-ui dev",
+        "devPath": "http://localhost:5173",
+        "distDir": "../../shared-ui/dist"
+    },
+    "package": {
+        "productName": "lunatix",
+        "version": "0.1.0"
+    },
+    "tauri": {
+        "allowlist": {
+            "all": false,
+            "shell": {
+                "all": false,
+                "open": true,
+                "sidecar": true,
+                "scope": [
+                    {
+                        "name": "binaries/cpp-server",
+                        "sidecar": true,
+                        "args": true
+                    }
+                ]
+            },
+            "protocol": {
+                "all": true
+            }
+        },
+        "bundle": {
+            "active": true,
+            "identifier": "com.lunatix.demo",
+            "icon": [
+                "icons/32x32.png",
+                "icons/128x128.png",
+                "icons/128x128@2x.png",
+                "icons/icon.icns",
+                "icons/icon.ico"
+            ],
+            "externalBin": [
+                "binaries/cpp-server"
+            ]
+        },
+        "security": {
+            "csp": null
+        },
+        "updater": {
+            "active": false
+        },
+        "windows": [
+            {
+                "fullscreen": false,
+                "resizable": true,
+                "title": "Lunatix Demo",
+                "width": 800,
+                "height": 600
+            }
+        ]
+    }
+}

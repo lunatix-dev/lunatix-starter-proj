@@ -1,0 +1,30 @@
+{
+    "server": {
+        "common": {
+            "compiler": "clang++",
+            "cpp_std": "c++23",
+            "args": [],
+            "env": {}
+        },
+        "presets": {
+            "debug": {
+                "args": [
+                    "-Dbuildtype=debug"
+                ],
+                "env": {}
+            },
+            "release": {
+                "args": [
+                    "-Dbuildtype=release"
+                ],
+                "env": {}
+            }
+        }
+    },
+    "desktop": {
+        "env": {
+            "WEBKIT_DISABLE_DMABUF_RENDERER": "1",
+            "NO_STRIP": "1"
+        }
+    }
+}

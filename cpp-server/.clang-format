@@ -1,0 +1,28 @@
+---
+Language: Cpp
+BasedOnStyle: Google
+
+# Core Indentation
+IndentWidth: 4
+AccessModifierOffset: -2
+IndentCaseLabels: false
+
+# Bracing and Functions
+BreakBeforeBraces: Attach
+AllowShortEnumsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: Never
+
+# Wrapping and Columns
+ColumnLimit: 100
+AlwaysBreakBeforeMultilineStrings: true
+BreakBeforeBinaryOperators: All
+AlignOperands: Align
+
+# Includes
+IncludeBlocks: Preserve
+SortIncludes: false
+
+# Ensures continuation lines also respect the 4-space rule
+ContinuationIndentWidth: 4
+---

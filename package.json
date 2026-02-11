@@ -1,0 +1,23 @@
+{
+    "name": "lunatix-starter-proj",
+    "private": true,
+    "workspaces": [
+        "apps/*"
+    ],
+    "scripts": {
+        "start:server": "cd cpp-server && f() { ./build/cpp-server --port ${1:-8080}; }; f",
+        "start:web": "cd apps/web-app && bun run dev",
+        "start:web:standalone": "trap 'kill 0' EXIT; bun run start:server & bun run start:web",
+        "start:desktop": "./scripts/desktop-run.sh dev",
+        "start:desktop:standalone": "trap 'kill 0' EXIT; bun run copy:server && LUNATIX_STANDALONE=1 ./scripts/desktop-run.sh dev",
+        "copy:server": "mkdir -p apps/desktop-app/src-tauri/binaries && cp cpp-server/build/cpp-server apps/desktop-app/src-tauri/binaries/cpp-server-x86_64-unknown-linux-gnu",
+        "build:server": "cd cpp-server && meson compile -C build",
+        "build:web": "cd apps/web-app && bun run build",
+        "build:desktop": "./scripts/desktop-run.sh build",
+        "build:desktop:standalone": "bun run build:server && bun run copy:server && bun run build:desktop",
+        "config:debug": "./configure.sh debug",
+        "config:release": "./configure.sh release",
+        "check-deps": "./scripts/check-deps.sh",
+        "build:all-release": "bun run config:release && bun run build:server && bun run build:web && bun run build:desktop"
+    }
+}
