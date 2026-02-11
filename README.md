@@ -35,59 +35,69 @@ graph TD
 
 ---
 
-## Getting Started
+## Quick Start
 
-### 1. Verify Dependencies
-Run the automated dependency checker to ensure you have all required development tools (Bun, Node, Meson, Ninja, Rust, C++23):
+The easiest way to get started is to use the integrated installation script:
 
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+This will verify your dependencies, install all necessary packages, configure the build environment, and compile the project.
+
+---
+
+## Manual Setup & Development
+
+### 1. Verification & Configuration
+
+Verify you have all required development tools:
 ```bash
 bun run check-deps
 ```
 
-### 2. Configure the Backend
-The C++ server uses a centralized configuration system. Initialize your build environment using one of the presets defined in `build-config.json`:
-
+Initialize your build environment using one of the presets defined in `build-config.json`:
 ```bash
-bun run config:debug
+bun run config:debug    # For development (default)
+bun run config:release  # For production builds
 ```
 
-### 3. Run the Application
+### 2. Running the Application
 
-#### Web Only
-```bash
-bun run start:web
-```
+Use the `start.sh` script (or `bun run start:*` shortcuts) to launch different components:
 
-#### Desktop (with Managed Sidecar)
-To run the desktop app and have Tauri automatically manage the C++ server life-cycle:
-```bash
-bun run start:desktop:standalone
-```
+| Command | Description |
+|---------|-------------|
+| `./start.sh web` | Starts the Svelte web application |
+| `./start.sh desktop` | Starts the Tauri desktop application |
+| `./start.sh server` | Starts only the C++ backend |
+| `./start.sh desktop:standalone` | Starts desktop app with managed C++ sidecar |
 
----
+### 3. Utility Commands
 
-##  Configuration Management
+| Command | Description |
+|---------|-------------|
+| `bun run clean` | Removes all build artifacts, `node_modules`, and temporary files |
+| `bun run check-deps` | Verifies system dependencies |
 
-Project-wide settings are centralized in **`build-config.json`**:
+### 4. Building for Production
 
-- **`server`**: Control the C++ compiler (`clang++` vs `g++`), C++ standard, and Meson build arguments.
-- **`desktop`**: Manage environment variables (like `WEBKIT_DISABLE_DMABUF_RENDERER`) for the Tauri shell.
-
----
-
-##  Build Workflows
-
-### Full Release Pipeline
 To perform a complete build of the entire stack for distribution:
 ```bash
 bun run build:all-release
 ```
 
-### Manual Server Build
+Or use the `build.sh` script directly for more control:
 ```bash
-# Update configuration
-bun run config:release
-
-# Compile
-bun run build:server
+./build.sh --release --standalone
 ```
+
+---
+
+## Configuration Management
+
+Project-wide settings are centralized in **`build-config.json`**:
+
+- **`server`**: Control the C++ compiler (`clang++` vs `g++`), C++ standard, and Meson build arguments.
+- **`desktop`**: Manage environment variables (like `WEBKIT_DISABLE_DMABUF_RENDERER`) for the Tauri shell.

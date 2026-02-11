@@ -1,7 +1,7 @@
 {
     "server": {
         "common": {
-            "compiler": "clang++",
+            "compiler": "g++",
             "cpp_std": "c++23",
             "args": [],
             "env": {}
