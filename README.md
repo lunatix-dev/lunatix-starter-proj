@@ -4,7 +4,7 @@ A high-performance monorepo boilerplate combining the speed of C++ backends with
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 This project uses a monorepo structure to share components across web and desktop targets while maintaining a high-performance native core.
 
@@ -35,7 +35,7 @@ graph TD
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Verify Dependencies
 Run the automated dependency checker to ensure you have all required development tools (Bun, Node, Meson, Ninja, Rust, C++23):
@@ -66,7 +66,7 @@ bun run start:desktop:standalone
 
 ---
 
-## 🔧 Configuration Management
+##  Configuration Management
 
 Project-wide settings are centralized in **`build-config.json`**:
 
@@ -75,7 +75,7 @@ Project-wide settings are centralized in **`build-config.json`**:
 
 ---
 
-## 🛠️ Build Workflows
+##  Build Workflows
 
 ### Full Release Pipeline
 To perform a complete build of the entire stack for distribution:

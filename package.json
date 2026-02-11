@@ -6,8 +6,8 @@
     ],
     "scripts": {
         "start:server": "cd cpp-server && f() { ./build/cpp-server --port ${1:-8080}; }; f",
-        "start:web": "cd apps/web-app && bun run dev",
-        "start:web:standalone": "trap 'kill 0' EXIT; bun run start:server & bun run start:web",
+        "start:web": "cd apps/web-app && f() { bun run dev -- \"$@\"; }; f",
+        "start:web:standalone": "trap 'kill 0' EXIT; f() { bun run start:server \"$1\" & bun run start:web -- ${2:+--port $2}; }; f",
         "start:desktop": "./scripts/desktop-run.sh dev",
         "start:desktop:standalone": "trap 'kill 0' EXIT; bun run copy:server && LUNATIX_STANDALONE=1 ./scripts/desktop-run.sh dev",
         "copy:server": "mkdir -p apps/desktop-app/src-tauri/binaries && cp cpp-server/build/cpp-server apps/desktop-app/src-tauri/binaries/cpp-server-x86_64-unknown-linux-gnu",
